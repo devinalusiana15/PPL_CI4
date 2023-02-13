@@ -22,6 +22,12 @@
  
     public function display()
     {
+        if(session()->get('username')=='')
+        {
+            
+            session()->setFlashdata('gagal', 'Anda belum login!');
+            return redirect()->to('/');
+        }
         $model = new \App\Models\M_Mahasiswa();
         $data = [
             'mahasiswa' => $model->getAll(),
@@ -32,6 +38,12 @@
 
     public function create()
     {
+        if(session()->get('username')=='')
+        {
+            
+            session()->setFlashdata('gagal', 'Anda belum login!');
+            return redirect()->to('/');
+        }
         $data = [
             'title' => 'Mahasiswa'
         ];
@@ -84,6 +96,12 @@
 
     public function detail($NIM)
     {
+        if(session()->get('username')=='')
+        {
+            
+            session()->setFlashdata('gagal', 'Anda belum login!');
+            return redirect()->to('/');
+        }
         $data = [
             'mahasiswa' => $this->model->getMahasiswa($NIM),
             'title' => 'Detail Mahasiswa'
@@ -93,9 +111,27 @@
 
     public function delete($NIM)
     {
-        $this->model->delete($NIM);
-        return redirect()->with('success', 'Data Deleted Successfully');
+        $this->model->deleteMahasiswa($NIM);
+        return redirect()->to('/mahasiswa');
     }
 
- 
+    public function edit($NIM)
+    {
+        $data = [
+            'title' => 'Edit Mahasiswa',
+            'mahasiswa' => $this->model->getMahasiswa($NIM)
+        ];
+        return view ('v_edit', $data);
+    }
+
+    public function editStore()
+    {
+        $data = [
+            'NIM' => $this->request->getPost('NIM'),
+            'Nama' => $this->request->getPost('Nama'),
+            'Umur' => $this->request->getPost('Umur')
+        ];
+        $this->model->mahasiswa_store($data);
+        return redirect()->to('/');
+    }
 }

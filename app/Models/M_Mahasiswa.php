@@ -42,4 +42,10 @@ class M_Mahasiswa extends CodeIgniterModel
         $this->db->close();
         return $data->getRowArray();
     }
+
+    public function deleteMahasiswa($nim)
+    {
+        return $this->db->query("DELETE FROM {$this->table} WHERE nim = '{$nim}'");
+        
+    }
 }

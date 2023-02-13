@@ -33,8 +33,11 @@
                     <td><?= $mhs['NIM'] ?></td>
                     <td><?= $mhs['Nama'] ?></td>
                     <td><?= $mhs['Umur'] ?></td>
-                    <td><a href="/viewdetail/<?=$mhs['NIM']?>">View Details</a></td>
-                    <td><a href="/delete/<?=$mhs['NIM']?>">Delete</a></td>
+                    <td><a href="/viewdetail/<?=$mhs['NIM']?>">View Details</a>
+                    &nbsp
+                    <a href="/edit/<?=$mhs['NIM']?>">Edit</a>
+                    &nbsp
+                    <a href="/delete/<?=$mhs['NIM']?>">Delete</a></td>
                 </tr>
             <?php endforeach; ?>
         </tbody>

@@ -12,8 +12,12 @@
 			<tr>
 				<td>
                 <a href="/home">Home</a>
+				&nbsp
                 <a href="/info">Info</a>
+				&nbsp
                 <a href="/mahasiswa">Mahasiswa</a>
+				&nbsp
+                <a href="/logout">Logout</a>
                 </td>
 			</tr>
         </table>	
