@@ -22,28 +22,18 @@
  
     public function display()
     {
-        if(session()->get('username')=='')
-        {
-            
-            session()->setFlashdata('gagal', 'Anda belum login!');
-            return redirect()->to('/');
-        }
-        $model = new \App\Models\M_Mahasiswa();
+        $keyword = $this->request->getVar('keyword') ? $this->request->getVar('keyword') : null;
+        $mahasiswa = $keyword ? $this->model->mahasiswaSearch($keyword) : $this->model->getAll();
+        $model = new \App\Models\m_mahasiswa();
         $data = [
-            'mahasiswa' => $model->getAll(),
-            'title' => 'Mahasiswa'
+            'mahasiswa' => $mahasiswa,
+            'title' => 'mahasiswa'
         ];
         return view('v_mahasiswa_display', $data);
     }
 
     public function create()
     {
-        if(session()->get('username')=='')
-        {
-            
-            session()->setFlashdata('gagal', 'Anda belum login!');
-            return redirect()->to('/');
-        }
         $data = [
             'title' => 'Mahasiswa'
         ];
@@ -52,34 +42,36 @@
  
     public function store()
     {
-        if (!$this->validate([
-            'NIM' => [
-                'label' => 'NIM',
-                'rules' => 'required|numeric|min_length[9]|max_length[9]',
-                'errors' => [
-                    'required' => '{field} harus diisi',
-                    'numeric' => '{field} harus berupa angka',
-                    'min_length' => '{field} harus berjumlah 9 karakter',
-                    'max_length' => '{field} harus berjumlah 9 karakter'
+        if (
+            !$this->validate([
+                'NIM' => [
+                    'label' => 'NIM',
+                    'rules' => 'required|numeric|min_length[9]|max_length[9]',
+                    'errors' => [
+                        'required' => '{field} harus diisi',
+                        'numeric' => '{field} harus berupa angka',
+                        'min_length' => '{field} harus berjumlah 9 karakter',
+                        'max_length' => '{field} harus berjumlah 9 karakter'
+                    ]
+                ],
+                'Nama' => [
+                    'label' => 'Nama',
+                    'rules' => 'required',
+                    'errors' => [
+                        'required' => '{field} harus diisi'
+                    ]
+                ],
+                'Umur' => [
+                    'label' => 'Umur',
+                    'rules' => 'required|numeric',
+                    'errors' => [
+                        'required' => '{field} harus diisi',
+                        'numeric' => '{field} harus berupa angka'
+                    ]
                 ]
-            ],
-            'Nama' => [
-                'label' => 'Nama',
-                'rules' => 'required',
-                'errors' => [
-                    'required' => '{field} harus diisi'
-                ]
-            ],
-            'Umur' => [
-                'label' => 'Umur',
-                'rules' => 'required|numeric',
-                'errors' => [
-                    'required' => '{field} harus diisi',
-                    'numeric' => '{field} harus berupa angka'
-                ]
-            ]
-        ])) {
-            return view('mahasiswa_input', [
+            ])
+        ) {
+            return view('v_mahasiswa_input', [
                 'errors' => $this->validator->getErrors(),
                 'title' => 'Store Mahasiswa Error !'
             ]);
@@ -89,19 +81,13 @@
             'Nama' => $this->request->getPost('Nama'),
             'Umur' => $this->request->getPost('Umur')
         ];
- 
+
         $this->model->mahasiswa_store($data);
-        return redirect()->to('/');
+        return redirect()->to('/mahasiswa');
     }
 
     public function detail($NIM)
     {
-        if(session()->get('username')=='')
-        {
-            
-            session()->setFlashdata('gagal', 'Anda belum login!');
-            return redirect()->to('/');
-        }
         $data = [
             'mahasiswa' => $this->model->getMahasiswa($NIM),
             'title' => 'Detail Mahasiswa'
@@ -118,20 +104,21 @@
     public function edit($NIM)
     {
         $data = [
-            'title' => 'Edit Mahasiswa',
-            'mahasiswa' => $this->model->getMahasiswa($NIM)
+            'mahasiswa' => $this->model->getMahasiswa($NIM),
+            'title' => 'Detail Mahasiswa'
         ];
-        return view ('v_edit', $data);
+        return view('v_edit', $data);
     }
 
-    public function editStore()
+    public function update($NIM)
     {
         $data = [
-            'NIM' => $this->request->getPost('NIM'),
             'Nama' => $this->request->getPost('Nama'),
             'Umur' => $this->request->getPost('Umur')
         ];
-        $this->model->mahasiswa_store($data);
-        return redirect()->to('/');
+
+        $this->model->mahasiswa_update($data,$NIM);
+        return redirect()->to('/mahasiswa');
     }
+
 }

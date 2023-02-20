@@ -10,25 +10,20 @@ class M_Mahasiswa extends CodeIgniterModel
     protected $table      = 'mahasiswa';
     protected $primaryKey = 'NIM';
     protected $allowedFields = ['NIM', 'Nama', 'Usia'];
- 
-    public function getAll()
-    {
- 
-        $sql = "SELECT * FROM mahasiswa";
- 
-        // eksekusi sql di atas
-        $db = db_connect();
-        $data = $db->query("SELECT * FROM {$this->table}");
- 
-        // return by array
-        return $data->getResultArray();
-    }
-
+    protected $beforeInsert = ['hashPassword'];
 
 
     public function __construct()
     {
         $this->db = db_connect();
+    }
+
+    public function getAll()
+    {
+        $data = $this->db->query("SELECT * FROM {$this->table}");
+ 
+        // return by array
+        return $data->getResultArray();
     }
  
     public function mahasiswa_store($data)
@@ -47,5 +42,23 @@ class M_Mahasiswa extends CodeIgniterModel
     {
         return $this->db->query("DELETE FROM {$this->table} WHERE nim = '{$nim}'");
         
+    }
+
+    public function mahasiswa_update($data, $nim)
+    {
+        return $this->db->query("UPDATE {$this->table} SET  Nama = '{$data['Nama']}', Umur = '{$data['Umur']}' WHERE NIM = '{$nim}'");
+    }
+
+    public function hashPassword(array $data)
+    {
+        $data['data']['password'] = password_hash($data['data']['password'], PASSWORD_DEFAULT);
+        return $data;
+    }
+
+    public function mahasiswaSearch($keyword)
+    {
+        $data = $this->db->query("SELECT * FROM {$this->table} WHERE nim LIKE '%{$keyword}%' OR nama LIKE '%{$keyword}%' OR umur LIKE '%{$keyword}%'");
+        $this->db->close();
+        return $data->getResultArray();
     }
 }

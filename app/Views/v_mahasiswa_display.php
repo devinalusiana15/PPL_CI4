@@ -13,8 +13,16 @@
     <title>MAHASISWA</title>
 </head>
 
+<form action="<?= base_url('mahasiswa') ?>" method="get">
+        <a href="/mahasiswa">back</a>
+        &nbsp
+        <input type="search" name="keyword" placeholder="Masukkan Nama Mahasiswa" autofocus>
+        <button type="submit">Cari</button>
+    </form><br>
+
 <h1>Data Mahasiswa</h1>
 <br>
+
 
 <body>
     <table border="1">

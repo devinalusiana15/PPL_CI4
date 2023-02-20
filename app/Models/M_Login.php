@@ -1,20 +1,23 @@
 <?php
- 
+
 namespace App\Models;
- 
+
 use CodeIgniter\Model as CodeIgniterModel;
- 
+
 class M_Login extends CodeIgniterModel
 {
     protected $model;
     protected $table      = 'user';
     protected $primaryKey = 'id_user';
-    protected $allowedFields = ['id_user', 'NIM', 'Username', 'Password'];
+    protected $allowedFields = ['id_user', 'NIM', 'username', 'password'];
 
-    public function cek_login($username, $password)
+    public function verifyPassword($password, string $hash)
     {
-        $data = $this->db->query("SELECT * FROM {$this->table} WHERE username = '{$username}' AND password = '{$password}'");
-        $this->db->close();
-        return $data->getRowArray();
+        return password_verify($password, $hash);
+    }
+
+    public function findByUsername($username)
+    {
+        return $this->where(['username' => $username])->first();
     }
 }

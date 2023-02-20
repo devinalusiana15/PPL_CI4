@@ -39,8 +39,14 @@ $routes->get('/mahasiswa', 'C_Mahasiswa::display');
 $routes->get('/viewdetail/(:num)', 'c_mahasiswa::detail/$1');
 $routes->get('/delete/(:segment)', 'c_mahasiswa::delete/$1');
 $routes->get('/edit/(:segment)', 'c_mahasiswa::edit/$1');
+$routes->post('/update/(:segment)', 'C_Mahasiswa::update/$1');
 
 /* Login */
 $routes->get('/', 'c_Login::index');
 $routes->post('/cek_login', 'c_Login::cek_login');
 $routes->get('/logout', 'c_Login::logout');
+
+/* Pegawai */
+$routes->get('/pegawai', 'c_pegawai::display');
+$routes->get('/addpegawai', 'c_pegawai::create');
+$routes->post('/storepegawai', 'c_pegawai::store');

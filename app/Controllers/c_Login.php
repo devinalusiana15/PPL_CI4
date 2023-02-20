@@ -1,11 +1,13 @@
 <?php
- 
- namespace App\Controllers;
- use App\Models\M_Login;
- 
- class C_Login extends BaseController
- {
-    protected $model; 
+
+namespace App\Controllers;
+
+use App\Controllers\BaseController;
+use App\Models\M_Login;
+
+class c_Login extends BaseController
+{
+    protected $model;
     public function __construct()
     {
         $this->model = new M_Login();
@@ -13,25 +15,29 @@
 
     public function index()
     {
-        return view('v_Login');
+        return view('v_login');
     }
 
     public function cek_login()
     {
+        $model = new M_Login();
+
         $username = $this->request->getPost('username');
         $password = $this->request->getPost('password');
 
-        $cek = $this->model->cek_login($username, $password);
-        if (($cek))
-        {
-            session()->set('username', $cek['username']);
-            session()->set('NIM', $cek['NIM']);
-            return redirect()->to('/home');
-        }else{
-            session()->setFlashdata('gagal', 'Username atau Password Salah');
-            return redirect()->to('/');
+        $user = $model->findByUsername($username);
+        $pass = $model->verifyPassword($password, $user['password']);
+
+        if (!$user || !$pass) {
+            return redirect()->to('/')->with('error', 'Username atau Password salah');
         }
+
+        session()->set('username', $user['username']);
+        session()->set('password', $user['password']);
+        session()->set('isLoggedIn', true);
+        return redirect()->to('/home');
     }
+
 
     public function logout()
     {

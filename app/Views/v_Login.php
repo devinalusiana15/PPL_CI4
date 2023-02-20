@@ -5,7 +5,10 @@
     }?>
 
     <?= form_open('/cek_login'); ?>
-    <table>
+    <table align="center">
+    <tr>
+            <th colspan="2" height="40">FORM LOGIN</th>
+        </tr>
     <tr>
         <td for="username" width="100">Username</td> 
         <td><input type="text" name="username" id="username" ></td>

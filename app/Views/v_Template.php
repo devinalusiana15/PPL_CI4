@@ -17,6 +17,8 @@
 				&nbsp
                 <a href="/mahasiswa">Mahasiswa</a>
 				&nbsp
+                <a href="/pegawai">Pegawai</a>
+				&nbsp
                 <a href="/logout">Logout</a>
                 </td>
 			</tr>
