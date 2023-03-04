@@ -7,7 +7,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">    
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
     <title>Pegawai</title>
 </head>
 
@@ -15,7 +16,7 @@
 <br>
 
 <body>
-    <table border="1">
+    <table class="table table-bordered table-striped" style="width:40%" >
         <thead>
             <tr>
                 <th>NIM</th>
@@ -43,7 +44,7 @@
 
     <br><br>
     <a href="addpegawai">
-        <button>Tambah Data Pegawai</button>
+        <button class="btn btn-primary">Tambah Data Pegawai</button>
     </a>
 
 </body>

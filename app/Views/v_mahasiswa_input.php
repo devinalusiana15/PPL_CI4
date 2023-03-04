@@ -1,6 +1,16 @@
 <?= $this->extend('v_Template');?>
 <?= $this->section('content'); ?>
 
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+</head>
+
 <section id="form-mahasiswa-store">
     <?php
     if (isset($errors)) {
@@ -28,8 +38,8 @@
         <td><input type="number" name="Umur" id="Umur" value="<?= set_value('Umur') ?>"></td>
     </tr>
     <tr>
-        <td><a href="/mahasiswa">&laquo; Kembali</a></td>
-        <td><input type="submit" name="simpan" value="Simpan"></td>
+        <td><a href="/mahasiswa" class="btn btn-secondary"> Kembali</a></td>
+        <td><input type="submit" name="simpan" value="Simpan" class="btn btn-success"></td>
     </tr>
 </table>
 <?= form_close(); ?>

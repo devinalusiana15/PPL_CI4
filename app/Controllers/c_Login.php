@@ -26,18 +26,20 @@ class c_Login extends BaseController
         $password = $this->request->getPost('password');
 
         $user = $model->findByUsername($username);
-        $pass = $model->verifyPassword($password, $user['password']);
+         $pass = $model->verifyPassword($password, $user['password']);
 
         if (!$user || !$pass) {
             return redirect()->to('/')->with('error', 'Username atau Password salah');
         }
-
+        // if (!$model->verifyPassword($password, $user['password'])) {
+        //     return redirect()->to('/login')->with('error', 'Email atau Password salah');
+        // }
         session()->set('username', $user['username']);
         session()->set('password', $user['password']);
         session()->set('isLoggedIn', true);
-        return redirect()->to('/home');
-    }
+        return view('v_home');
 
+    }
 
     public function logout()
     {
